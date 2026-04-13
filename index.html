@@ -1,1 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For You ❤️</title>
 
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: Arial;
+      color: white;
+
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card {
+      width: 320px;
+      text-align: center;
+      background: rgba(0,0,0,0.35);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    #typing {
+      font-size: 18px;
+      margin-top: 10px;
+      min-height: 40px;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-top: 10px;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .chat {
+      margin-top: 15px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .msg {
+      background: #ffffff30;
+      padding: 8px;
+      border-radius: 10px;
+      margin: 5px 0;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .buttons {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .yes { background: #28a745; color: white; }
+    .no { background: #dc3545; color: white; }
+
+    .yes:hover { transform: scale(1.1); }
+    .no:hover { transform: scale(1.1); }
+
+    /* Hearts */
+    .heart {
+      position: absolute;
+      color: red;
+      animation: float 5s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="song.mp3" type="audio/mp3">
+</audio>
+
+<div class="card" id="card">
+  <h1>Hey ❤️</h1>
+
+  <!-- Typing Text -->
+  <div id="typing"></div>
+
+  <!-- Photo -->
+  <img id="photo" src="img2.jpeg">
+ 
+
+  <!-- Chat -->
+  <div class="chat" id="chat"></div>
+
+  <!-- Buttons -->
+  <div class="buttons">
+    <button class="yes" onclick="forgive()">Forgive Me 😍</button>
+    <button class="no" id="noBtn">No 😡</button>
+  </div>
+</div>
+
+<script>
+  // Typing animation
+  const text = "I'm really sorry... please don't be angry tukiyyyaaaaaaaa 🥺";
+  let i = 0;
+
+  function typeEffect() {
+    if (i < text.length) {
+      document.getElementById("typing").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeEffect, 50);
+    }
+  }
+  typeEffect();
+
+  // Photo slideshow
+  const photos = ["photo1.jpg", "photo2.jpg", "photo3.jpg"];
+  let p = 0;
+
+  setInterval(() => {
+    p = (p + 1) % photos.length;
+    document.getElementById("photo").src = photos[p];
+  }, 2000);
+
+  // Chat messages
+  const messages = [
+    "Hey...",
+    "Are you still angry?",
+    "I didn’t mean it 😔",
+    "Please talk to me 🥺",
+    "reason1: I forgot to call you back",
+    "reason2: I was busy with work murga bna rhe the",
+    "reason3: I was sleeping and didn’t hear the phone",
+    "I promise I’ll do better",
+    "pyari si tukiyyyaaaaaaaa   🥰"
+  ];
+
+  let m = 0;
+  function showMessage() {
+    if (m < messages.length) {
+      const msg = document.createElement("div");
+      msg.classList.add("msg");
+      msg.innerText = messages[m];
+      document.getElementById("chat").appendChild(msg);
+      m++;
+      setTimeout(showMessage, 1500);
+    }
+  }
+  showMessage();
+
+  // Forgive
+  function forgive() {
+    document.getElementById("card").innerHTML =
+      "<h1>Thank You ❤️</h1><p>I promise I’ll do better 🥺</p>";
+  }
+
+  // Moving NO button
+  const noBtn = document.getElementById("noBtn");
+
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * window.innerWidth - 100;
+    const y = Math.random() * window.innerHeight - 50;
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  });
+
+  // Hearts
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 10 + "px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 5000);
+  }
+
+  setInterval(createHeart, 200);
+</script>
+
+</body>
+</html>
